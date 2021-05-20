@@ -57,7 +57,6 @@ public class GameplayManager : MonoBehaviour
         if(levier >= max)
         {
             //ShowWin();
-            Debug.Log("Win");
         }
         /*if (Input.GetKey(KeyCode.Q))
         {

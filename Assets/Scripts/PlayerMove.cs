@@ -57,16 +57,6 @@ public class PlayerMove : MonoBehaviour
             Physics2D.IgnoreLayerCollision(8, 10, true);
             sprite.color = new Color(0, 0, 0, 1);
         }
-        if (collision.gameObject.tag == "Levier")
-        {
-            if(Input.GetKey(KeyCode.C))
-            {
-                Debug.Log("pushc");
-                GameplayManager.Instance.levier++;
-                Physics2D.IgnoreLayerCollision(8, 11, true);
-                Debug.Log("levier");
-            }
-        }
     }
 
         private void OnTriggerExit2D(Collider2D collision)
