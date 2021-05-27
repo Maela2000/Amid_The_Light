@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
-    private bool follow = true;
     public Transform player;
     public Vector3 offset;
     // Start is called before the first frame update
@@ -15,8 +14,10 @@ public class CamFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (follow == true)
+    {        
+        if (player.position.x <= 10 && player.position.x >= -10 && player.position.y <= 10 && player.position.y >= -10)
+        {
             transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, offset.z);
-    }
+        }
+    }        
 }
