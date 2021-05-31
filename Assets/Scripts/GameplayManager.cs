@@ -8,15 +8,18 @@ public class GameplayManager : MonoBehaviour
 {
     #region variable
     public static GameplayManager Instance;
+    public static bool gameIsPaused;
 
-    /*public GameObject Player;
+    public GameObject player;
     public GameObject panelGameOver;
     public GameObject pauseTxt;
     public GameObject panelWin;
-    public GameObject Boss;*/
+    public GameObject dashBar;
+    public GameObject Commands;
 
     public float levier;
     public float max;
+
     #endregion
 
 
@@ -30,42 +33,68 @@ public class GameplayManager : MonoBehaviour
     }
     #endregion
 
+    public void Start()
+    {
+        Time.timeScale = 1;
+    }
+
 
     #region Update
     public void Update()
     {
         if (Input.GetKey("escape"))
         {
-            Application.Quit();
-        }
-
-       /* if (Input.GetKey(KeyCode.X))
-        {
-            Time.timeScale = 0f;
-            AudioListener.pause = true;
-            pauseTxt.SetActive(true);
-
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
             Time.timeScale = 1;
-            AudioListener.pause = false;
             pauseTxt.SetActive(false);
-        }*/
+            AudioListener.pause = false;
+        }
 
-        if(levier >= max)
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            //ShowWin();
+            gameIsPaused = !gameIsPaused;
+            PauseGame();
+        }
+
+        if (levier >= max)
+        {
+            ShowWin();
         }
         /*if (Input.GetKey(KeyCode.Q))
         {
             SceneManager.LoadScene(0);
         }*/
+
+        if(player == null)
+        {
+            ShowGameOver();
+        }
+
+        if(player.GetComponent<PlayerMove>().isDash==true)
+        {
+            dashBar.SetActive(true);
+        }
+        if (player.GetComponent<PlayerMove>().isDash == false)
+        {
+            dashBar.SetActive(false);
+        }
     }
     #endregion
-
-    /*#region function
+    void PauseGame()
+    {
+        if (gameIsPaused)
+        {
+            Time.timeScale = 0f;
+            pauseTxt.SetActive(true);
+            AudioListener.pause = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pauseTxt.SetActive(false);
+            AudioListener.pause = false;
+        }
+    }
+    #region function
 
     public void ShowGameOver()
     {
@@ -79,10 +108,36 @@ public class GameplayManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    public void OnClick_Menu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnClick_Reprendre()
+    {
+        Time.timeScale = 1;
+        pauseTxt.SetActive(false);
+        AudioListener.pause = false;
+    }
+
     public void OnClick_Retry()
     {
-        SceneManager.LoadScene(2);
-        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
     }
-    #endregion*/
+
+    public void OnClick_Commands()
+    {
+        Commands.SetActive(true);
+    }
+
+    public void OnClick_Pause()
+    {
+        Commands.SetActive(false);
+    }
+
+    public void OnClick_Exit()
+    {
+        Application.Quit();
+    }
+    #endregion
 }
