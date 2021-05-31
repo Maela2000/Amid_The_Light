@@ -1,4 +1,8 @@
 
 Library/
 
+<<<<<<< HEAD
 obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+=======
+Temp/
+>>>>>>> master
