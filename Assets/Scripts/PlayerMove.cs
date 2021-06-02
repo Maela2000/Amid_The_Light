@@ -6,8 +6,6 @@ public class PlayerMove : MonoBehaviour
 {
     public float speed;
     public float health;
-    //public GameObject spriteNormal;
-    //public GameObject spriteX;
     public float dashforce;
     public float startDashTimer;
     public Animator animator;
@@ -22,6 +20,7 @@ public class PlayerMove : MonoBehaviour
     private float jumpVelocity;
     private float xPos;
     private bool isShadow=false;
+    private Transform target;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +33,8 @@ public class PlayerMove : MonoBehaviour
     {
         xPos = Input.GetAxis("Horizontal");
         if (xPos != 0) //Rotate player sprite to the left
-        { GetComponent<SpriteRenderer>().flipX = xPos < 0;
+        {
+            GetComponent<SpriteRenderer>().flipX = xPos < 0;
         }
 
         if (Input.GetKey(KeyCode.B))
@@ -42,21 +42,30 @@ public class PlayerMove : MonoBehaviour
             health = 0;
         }
 
+        if(xPos==0)
+        {
+            animator.SetBool("RunRight", false);
+        }
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
+            animator.SetBool("RunRight", true);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
+            animator.SetBool("RunRight", false);
         }
         if (Input.GetKey(KeyCode.UpArrow) && isShadow==true)
         {
             transform.Translate(Vector2.up * speed * Time.deltaTime);
+            animator.SetBool("RunRight", false);
         }
         if (Input.GetKey(KeyCode.DownArrow) && isShadow==true)
         {
              transform.Translate(Vector2.down * speed * Time.deltaTime);
+             animator.SetBool("RunRight", false);
         }
         if (IsGrounded == true &&  Input.GetKeyDown(KeyCode.Space))
         {
@@ -101,19 +110,39 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("Dash", false);
             isDash = false;
             time = 0;
+            IsGrounded = true;
+        }
+
+        FollowTarget();
+    }
+    private void FollowTarget()
+    {
+        if (target != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//The enemy follow the player
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "ground")
+        if (other.gameObject.tag == "ground" || other.gameObject.tag == "platform")
         {
             IsGrounded = true;
             //animator.SetBool("IsGrounded", true);
         }
+        if(other.gameObject.tag == "light")
+        {
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.tag == "End")
+        {
+            GameplayManager.Instance.dashBar.SetActive(false);
+            GameplayManager.Instance.ShowWin();
+        }
     }
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.tag == "ground")
+        if (other.gameObject.tag == "ground"|| other.gameObject.tag == "platform")
         {
             IsGrounded = false;
         }
@@ -128,6 +157,10 @@ public class PlayerMove : MonoBehaviour
             rigidbody2d.gravityScale = 0;
             isShadow = true;
         }
+        if (collision.gameObject.tag == "platform")
+        {
+            target = collision.transform;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -139,6 +172,10 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("Shadow", false);
             rigidbody2d.gravityScale = 1;
             isShadow = false;
+        }
+        if (collision.gameObject.tag == "platform")
+        {
+            target = null;
         }
     }
 }

@@ -17,8 +17,8 @@ public class GameplayManager : MonoBehaviour
     public GameObject dashBar;
     public GameObject Commands;
 
-    public float levier;
-    public float max;
+    //public float levier;
+    //public float max;
 
     #endregion
 
@@ -55,10 +55,6 @@ public class GameplayManager : MonoBehaviour
             PauseGame();
         }
 
-        if (levier >= max)
-        {
-            ShowWin();
-        }
         /*if (Input.GetKey(KeyCode.Q))
         {
             SceneManager.LoadScene(0);
@@ -100,12 +96,14 @@ public class GameplayManager : MonoBehaviour
     {
         panelGameOver.SetActive(true);
         Time.timeScale = 0f;
+        dashBar.SetActive(false);
     }
 
     public void ShowWin()
     {
         panelWin.SetActive(true);
         Time.timeScale = 0f;
+        dashBar.SetActive(false);
     }
 
     public void OnClick_Menu()

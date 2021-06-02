@@ -7,6 +7,11 @@ TagManager:
   - Wall
   - ground
   - Levier
+  - light
+  - Spot
+  - Spot2
+  - platform
+  - End
   layers:
   - Default
   - TransparentFX
