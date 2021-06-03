@@ -101,9 +101,10 @@ public class GameplayManager : MonoBehaviour
 
     public void ShowWin()
     {
+        dashBar.SetActive(false);
         panelWin.SetActive(true);
         Time.timeScale = 0f;
-        dashBar.SetActive(false);
+        
     }
 
     public void OnClick_Menu()

@@ -47,10 +47,12 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("RunRight", false);
         }
 
+        animator.SetFloat("Speed", (Mathf.Abs(xPos) * speed));
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
-            animator.SetBool("RunRight", true);
+            //animator.SetBool("RunRight", true);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
