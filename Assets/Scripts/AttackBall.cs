@@ -15,7 +15,7 @@ public class AttackBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.Find("Player");
+        target = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
 
         //StartCoroutine("Homing");
@@ -27,24 +27,25 @@ public class AttackBall : MonoBehaviour
         
     }
 
-   /* IEnumerator Homing()
-    {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+     IEnumerator Homing()
+     {
+         transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-        dir = (target.transform.position - transform.position).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        rotateToTarget = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, Time.deltaTime * rotationSpeed);
+         dir = (target.transform.position - transform.position).normalized;
+         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+         rotateToTarget = Quaternion.AngleAxis(angle, Vector3.forward);
+         transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, Time.deltaTime * rotationSpeed);
 
-        rb.velocity = new Vector2(dir.x * 2, dir.y * 2);
-        new WaitForSeconds(2f);
-        StartCoroutine("droit");
-        return;
-    }
+         rb.velocity = new Vector2(dir.x * 2, dir.y * 2);
+         new WaitForSeconds(2f);
+         StartCoroutine("droit");
+         yield return null;
+     }
 
-    IEnumerator droit()
-    {
-
-    }*/
+     IEnumerator droit()
+     {
+         transform.Translate(Vector3.left * speed * Time.deltaTime);
+         yield return null;
+     }
 
 }
