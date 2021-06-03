@@ -5,6 +5,8 @@ using UnityEngine;
 public class lampadaire : MonoBehaviour
 {
     private float x;
+    public float c;
+    public float v;
     private bool up = true;
     private bool down= false;
     // Start is called before the first frame update
@@ -17,22 +19,22 @@ public class lampadaire : MonoBehaviour
     void Update()
     {
         Debug.Log(x);
-        if (x <= 89 && x >= 0 && (up == true))
+        if (x <= c-1 && x >= v && (up == true))
         {
             transform.Rotate(0, 0, 1f);
             x = x + 1;
-            if (x >= 90)
+            if (x >= c)
             {
                 up = false;
                 down = true;
             }
         }
 
-        else if (x <= 90 && x >= 1 && (down == true))
+        else if (x <= c && x >= v+1 && (down == true))
             {
                 transform.Rotate(0, 0, -1f);
                 x = x - 1;
-            if (x <= 0)
+            if (x <= v)
             {
                 up = true;
                 down = false;
