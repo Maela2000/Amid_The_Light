@@ -16,6 +16,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject panelWin;
     public GameObject dashBar;
     public GameObject Commands;
+    public bool isFinish=false;
 
     //public float levier;
     //public float max;
@@ -65,7 +66,7 @@ public class GameplayManager : MonoBehaviour
             ShowGameOver();
         }
 
-        if(player.GetComponent<PlayerMove>().isDash==true)
+        if(player.GetComponent<PlayerMove>().isDash==true && isFinish == false)
         {
             dashBar.SetActive(true);
         }

@@ -124,6 +124,7 @@ public class PlayerMove : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//The enemy follow the player
         }
     }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "ground" || other.gameObject.tag == "platform")
@@ -138,7 +139,8 @@ public class PlayerMove : MonoBehaviour
 
         if (other.gameObject.tag == "End")
         {
-            GameplayManager.Instance.dashBar.SetActive(false);
+            GameplayManager.Instance.isFinish = true;
+            isDash = false;
             GameplayManager.Instance.ShowWin();
         }
     }

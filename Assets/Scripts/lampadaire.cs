@@ -8,20 +8,22 @@ public class lampadaire : MonoBehaviour
     public float c;
     public float v;
     private bool up = true;
-    private bool down= false;
+    private bool down = false;
+    public GameObject levier;
+    public GameObject light;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.Log(x);
-        if (x <= c-1 && x >= v && (up == true))
+        if (x <= c - 1 && x >= v && (up == true))
         {
-            transform.Rotate(0, 0, 1f);
+            transform.Rotate(0, 0, 0.1f);
             x = x + 1;
             if (x >= c)
             {
@@ -30,10 +32,10 @@ public class lampadaire : MonoBehaviour
             }
         }
 
-        else if (x <= c && x >= v+1 && (down == true))
-            {
-                transform.Rotate(0, 0, -1f);
-                x = x - 1;
+        else if (x <= c && x >= v + 1 && (down == true))
+        {
+            transform.Rotate(0, 0, -0.1f);
+            x = x - 1;
             if (x <= v)
             {
                 up = true;
@@ -41,5 +43,13 @@ public class lampadaire : MonoBehaviour
             }
         }
 
+        if (levier.GetComponent<LevierEnemy>().levierE == true)
+        {
+            up = false;
+            down = false;
+            v = 0;
+            c = 0;
+            light.SetActive(false);
+        }
     }
 }
