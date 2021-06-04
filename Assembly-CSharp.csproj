@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AttackBall.cs" />
+    <Compile Include="Assets\Scripts\BossLaser.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
     <Compile Include="Assets\Scripts\EnnemyTest.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
