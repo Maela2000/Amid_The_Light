@@ -18,7 +18,7 @@ public class AttackBall : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
 
-        //StartCoroutine("Homing");
+        StartCoroutine("Homing");
     }
 
     // Update is called once per frame
@@ -29,6 +29,7 @@ public class AttackBall : MonoBehaviour
 
      IEnumerator Homing()
      {
+        Debug.Log("homming");
          transform.Translate(Vector3.left * speed * Time.deltaTime);
 
          dir = (target.transform.position - transform.position).normalized;
@@ -37,14 +38,17 @@ public class AttackBall : MonoBehaviour
          transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, Time.deltaTime * rotationSpeed);
 
          rb.velocity = new Vector2(dir.x * 2, dir.y * 2);
-         new WaitForSeconds(2f);
+         yield return new WaitForSeconds(2f);
          StartCoroutine("droit");
          yield return null;
      }
 
      IEnumerator droit()
      {
-         transform.Translate(Vector3.left * speed * Time.deltaTime);
+        Debug.Log("droit");
+        transform.Translate(Vector3.left * speed * Time.deltaTime);
+       yield return new WaitForSeconds(8f);
+        Destroy(gameObject);
          yield return null;
      }
 
