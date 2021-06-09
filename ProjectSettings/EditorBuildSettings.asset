@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MaelaScene.unity
     guid: 511945762fc50a34ab9218f2b566b5b9
+  - enabled: 1
+    path: Assets/Scenes/Proto1.unity
+    guid: d6d07661ee2ac184dae282011dc01aec
   m_configObjects: {}

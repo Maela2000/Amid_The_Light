@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\CamFollow.cs" />
     <Compile Include="Assets\Scripts\EnnemyTest.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
+    <Compile Include="Assets\Scripts\Levels.cs" />
     <Compile Include="Assets\Scripts\Levier.cs" />
     <Compile Include="Assets\Scripts\LevierEnemy.cs" />
     <Compile Include="Assets\Scripts\LightsClign.cs" />
