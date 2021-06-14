@@ -9,6 +9,13 @@ public class MenuManager : MonoBehaviour
 
 
     public GameObject Commands;
+    public GameObject levels;
+
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         if (Input.GetKey("escape"))
@@ -40,5 +47,16 @@ public class MenuManager : MonoBehaviour
     public void OnClick_Menu()
     {
         Commands.SetActive(false);
+        levels.SetActive(false);
     }
+
+    public void OnClick_Levels()
+    {
+        levels.SetActive(true);
+    }
+    public void OnClick_Level1()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 }

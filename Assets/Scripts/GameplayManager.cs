@@ -16,6 +16,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject panelWin;
     public GameObject dashBar;
     public GameObject Commands;
+    public bool isFinish=false;
 
     //public float levier;
     //public float max;
@@ -55,17 +56,12 @@ public class GameplayManager : MonoBehaviour
             PauseGame();
         }
 
-        /*if (Input.GetKey(KeyCode.Q))
-        {
-            SceneManager.LoadScene(0);
-        }*/
-
         if(player == null)
         {
             ShowGameOver();
         }
 
-        if(player.GetComponent<PlayerMove>().isDash==true)
+        if(player.GetComponent<PlayerMove>().isDash==true && isFinish == false)
         {
             dashBar.SetActive(true);
         }
@@ -104,7 +100,6 @@ public class GameplayManager : MonoBehaviour
         dashBar.SetActive(false);
         panelWin.SetActive(true);
         Time.timeScale = 0f;
-        
     }
 
     public void OnClick_Menu()
@@ -119,9 +114,29 @@ public class GameplayManager : MonoBehaviour
         AudioListener.pause = false;
     }
 
+    public void OnClick_Continuer()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void OnClick_Continuer2()
+    {
+        SceneManager.LoadScene(3);
+    }
+
     public void OnClick_Retry()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void OnClick_Retry2()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void OnClick_Retry3()
+    {
+        SceneManager.LoadScene(3);
     }
 
     public void OnClick_Commands()
