@@ -9,7 +9,7 @@ public class Spawnball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnBullet", 1.0f, 0.6f);
+        InvokeRepeating("SpawnBullet", 1.0f, 3f);
         
     }
     void SpawnBullet()
