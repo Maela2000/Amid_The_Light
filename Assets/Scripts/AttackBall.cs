@@ -5,7 +5,7 @@ using UnityEngine;
 public class AttackBall : MonoBehaviour
 {
     public GameObject target;
-    public float rotationSpeed = 1f;
+    public float rotationSpeed;
     public float speed;
 
     Quaternion rotateToTarget;
@@ -17,22 +17,25 @@ public class AttackBall : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
-
-        StartCoroutine("Homing");
+        if (target == GameObject.FindGameObjectWithTag("Player"))
+        {
+            StartCoroutine("Homing");
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
 
      IEnumerator Homing()
      {
         Debug.Log("homming");
-         transform.Translate(Vector3.left * speed * Time.deltaTime);
+        transform.Translate(Vector3.left * speed * Time.deltaTime);
 
-         dir = (target.transform.position - transform.position).normalized;
+        dir = (target.transform.position - transform.position).normalized;
          float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
          rotateToTarget = Quaternion.AngleAxis(angle, Vector3.forward);
          transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, Time.deltaTime * rotationSpeed);
@@ -40,7 +43,7 @@ public class AttackBall : MonoBehaviour
          rb.velocity = new Vector2(dir.x * 2, dir.y * 2);
          yield return new WaitForSeconds(2f);
          StartCoroutine("droit");
-         yield return null;
+         //yield return null;
      }
 
      IEnumerator droit()
@@ -49,7 +52,7 @@ public class AttackBall : MonoBehaviour
         transform.Translate(Vector3.left * speed * Time.deltaTime);
        yield return new WaitForSeconds(8f);
         Destroy(gameObject);
-         yield return null;
+         //yield return null;
      }
 
 }
