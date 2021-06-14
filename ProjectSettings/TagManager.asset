@@ -12,6 +12,7 @@ TagManager:
   - Spot2
   - platform
   - End
+  - Wall2
   layers:
   - Default
   - TransparentFX

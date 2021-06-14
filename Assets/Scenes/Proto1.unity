@@ -928,8 +928,6 @@ MonoBehaviour:
   moveSpots:
   - {fileID: 1020990351}
   - {fileID: 168282921}
-  levier1: {fileID: 414803215}
-  levier2: {fileID: 1758353368}
   light1: {fileID: 1370672717}
   light2: {fileID: 1983545817}
 --- !u!212 &178587356
@@ -1098,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be57d4496e5fee46b1b2400d6667545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levierE: 0
 --- !u!61 &291403343
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1396,6 +1393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lum: {fileID: 1141096760}
+  sha: {fileID: 0}
 --- !u!1 &324296831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +1902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be57d4496e5fee46b1b2400d6667545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levierE: 0
 --- !u!61 &414803219
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2126,6 +2123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lum: {fileID: 133121571}
+  sha: {fileID: 0}
 --- !u!1 &468373123
 GameObject:
   m_ObjectHideFlags: 0
@@ -3853,7 +3851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be57d4496e5fee46b1b2400d6667545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levierE: 0
 --- !u!61 &873647458
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4114,8 +4111,6 @@ MonoBehaviour:
   moveSpots:
   - {fileID: 1960146510}
   - {fileID: 959899457}
-  levier1: {fileID: 291403339}
-  levier2: {fileID: 873647455}
   light1: {fileID: 1224296214}
   light2: {fileID: 720439980}
 --- !u!212 &933759876
@@ -5360,6 +5355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lum: {fileID: 230073381}
+  sha: {fileID: 0}
 --- !u!1 &1224296214
 GameObject:
   m_ObjectHideFlags: 0
@@ -6810,14 +6806,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   health: 1
-  dashforce: 5
-  startDashTimer: 0.01
   animator: {fileID: 1491418800}
   time: 0
   isDash: 0
+  colliB: {fileID: 0}
+  colliBF: {fileID: 0}
+  colliC: {fileID: 0}
   rigidbody2d: {fileID: 1491418802}
   IsGrounded: 0
   jumpVelocity: 9
+  isOmbre: 0
 --- !u!50 &1491418802
 Rigidbody2D:
   serializedVersion: 4
@@ -6839,8 +6837,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &1491418803
-PolygonCollider2D:
+--- !u!61 &1491418803
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6848,11 +6846,11 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1491418799}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 38809d5903ff41a4b8410262ed85cb56, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.20998529}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -6862,69 +6860,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.26, y: -0.965}
-      - {x: 0.29999998, y: -0.805}
-      - {x: 0.32999998, y: -0.45499998}
-      - {x: 0.37, y: -0.36499998}
-      - {x: 0.44, y: -0.39499998}
-      - {x: 0.47, y: -0.39499998}
-      - {x: 0.51, y: -0.36499998}
-      - {x: 0.55, y: -0.155}
-      - {x: 0.57, y: 0.005}
-      - {x: 0.57, y: 0.355}
-      - {x: 0.56, y: 0.615}
-      - {x: 0.61, y: 0.73499995}
-      - {x: 0.66999996, y: 0.91499996}
-      - {x: 0.66999996, y: 1.0649999}
-      - {x: 0.65, y: 1.145}
-      - {x: 0.53, y: 1.2149999}
-      - {x: 0.41, y: 1.3249999}
-      - {x: 0.29, y: 1.3249999}
-      - {x: 0.25, y: 1.3149999}
-      - {x: 0.21, y: 1.265}
-      - {x: 0.07, y: 1.0749999}
-      - {x: -0.03, y: 0.835}
-      - {x: -0.03, y: 0.765}
-      - {x: 0.08, y: 0.545}
-      - {x: -0.01, y: 0.48499998}
-      - {x: -0.26, y: 0.235}
-      - {x: -0.53999996, y: 0.125}
-      - {x: -0.48999998, y: 0.015}
-      - {x: -0.44, y: -0.044999998}
-      - {x: -0.44, y: -0.325}
-      - {x: -0.61, y: -0.315}
-      - {x: -0.7, y: -0.375}
-      - {x: -0.7, y: -0.59499997}
-      - {x: -0.64, y: -0.615}
-      - {x: -0.32, y: -0.375}
-      - {x: -0.16, y: -0.295}
-      - {x: -0.17999999, y: -0.42499998}
-      - {x: -0.01, y: -0.575}
-      - {x: -0.25, y: -0.575}
-      - {x: -0.35, y: -0.53499997}
-      - {x: -0.58, y: -0.565}
-      - {x: -0.63, y: -0.645}
-      - {x: -0.62, y: -0.715}
-      - {x: -0.63, y: -0.805}
-      - {x: -0.63, y: -0.935}
-      - {x: -0.5, y: -0.98499995}
-      - {x: -0.45999998, y: -0.92499995}
-      - {x: -0.45, y: -0.885}
-      - {x: -0.35, y: -0.78499997}
-      - {x: -0.29, y: -0.78499997}
-      - {x: -0.17, y: -0.765}
-      - {x: -0.01, y: -0.78499997}
-      - {x: 0.099999994, y: -0.84499997}
-      - {x: 0.049999997, y: -0.995}
-      - {x: 0.049999997, y: -1.125}
-      - {x: 0.01, y: -1.275}
-      - {x: 0.14999999, y: -1.3249999}
-      - {x: 0.39, y: -1.3249999}
-      - {x: 0.45, y: -1.265}
-      - {x: 0.37, y: -1.145}
-      - {x: 0.29999998, y: -1.155}
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2.3100295}
+  m_EdgeRadius: 0
 --- !u!212 &1491418804
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7983,7 +7921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be57d4496e5fee46b1b2400d6667545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levierE: 0
 --- !u!61 &1758353371
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8226,6 +8163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lum: {fileID: 1197109791}
+  sha: {fileID: 0}
 --- !u!1 &1783604759
 GameObject:
   m_ObjectHideFlags: 0
@@ -9349,7 +9287,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 42.27221
+  field of view: 26
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

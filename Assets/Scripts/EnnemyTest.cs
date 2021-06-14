@@ -11,8 +11,6 @@ public class EnnemyTest : MonoBehaviour
     public float xPos;
     private Transform target;
     public Transform[] moveSpots;//creation of gameobject which will serve as indicators
-    public GameObject levier1;
-    public GameObject levier2;
     public GameObject light1;
     public GameObject light2;
 
@@ -58,13 +56,6 @@ public class EnnemyTest : MonoBehaviour
             {
                 waitTime -= Time.deltaTime;
             }
-        }
-
-        if (levier1.GetComponent<LevierEnemy>().levierE == true|| levier2.GetComponent<LevierEnemy>().levierE == true)
-        {
-            Enemyspeed = 0;
-            light1.SetActive(false);
-            light2.SetActive(false);
         }
     }
 

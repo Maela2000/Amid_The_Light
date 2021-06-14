@@ -6,6 +6,7 @@ public class Levier : MonoBehaviour
 {
     public bool active;
     public GameObject lum;
+    public GameObject sha;
 
     private SpriteRenderer sprite;
     // Start is called before the first frame update
@@ -28,6 +29,7 @@ public class Levier : MonoBehaviour
             active = false;
             sprite.color = new Color(0.25f, 0.25f, 0.25f, 1);
             lum.SetActive(false);
+            sha.SetActive(true);
         }
     }
 }

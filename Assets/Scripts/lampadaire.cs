@@ -9,8 +9,6 @@ public class lampadaire : MonoBehaviour
     public float v;
     private bool up = true;
     private bool down = false;
-    public GameObject levier;
-    public GameObject light;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +18,6 @@ public class lampadaire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(x);
         if (x <= c - 1 && x >= v && (up == true))
         {
             transform.Rotate(0, 0, 0.1f);
@@ -41,15 +38,6 @@ public class lampadaire : MonoBehaviour
                 up = true;
                 down = false;
             }
-        }
-
-        if (levier.GetComponent<LevierEnemy>().levierE == true)
-        {
-            up = false;
-            down = false;
-            v = 0;
-            c = 0;
-            light.SetActive(false);
         }
     }
 }
