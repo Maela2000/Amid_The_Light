@@ -9,10 +9,10 @@ public class SpawnLaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnLaser", 10f, 3f);
+        InvokeRepeating("spawnLaser", 10f, 3f);
     }
 
-    void SpawnLaser()
+    void spawnLaser()
     {
         instaLaser = true;
         StartCoroutine("Stop");

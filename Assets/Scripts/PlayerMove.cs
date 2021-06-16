@@ -21,11 +21,13 @@ public class PlayerMove : MonoBehaviour
     private bool IsGrounded = false;
     [SerializeField]
     private float jumpVelocity;
-    private float xPos;
     private bool isShadow=false;
     public bool isOmbre= false;
     private Transform target;
     private bool isLeft;
+    public bool isShadowMode = false;
+    public bool isJumpR;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,62 +37,56 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        xPos = Input.GetAxis("Horizontal");
-        if (xPos != 0) //Rotate player sprite to the left
+        //xPos = Input.GetAxis("Horizontal");
+        /*if (xPos != 0) //Rotate player sprite to the left
         {
             GetComponent<SpriteRenderer>().flipX = xPos < 0;
-        }
+        }*/
 
         if (Input.GetKey(KeyCode.B))
         {
             health = 0;
         }
 
-        if(xPos==0)
-        {
-            animator.SetBool("RunRight", false);
-            animator.SetBool("RunLeft", false);
-        }
-
-        animator.SetFloat("Speed", (Mathf.Abs(xPos) * speed));
-
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             animator.SetBool("RunRight", true);
-            animator.SetBool("RunLeft", false);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
-            animator.SetBool("RunRight", true);
+            isJumpR = true;
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
+        {
+            animator.SetBool("RunRight", false);
+            isJumpR = true;
+        }
+            
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
-            animator.SetBool("RunRight", false);
             animator.SetBool("RunLeft", true);
+            isJumpR = false;
         }
-            if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && isOmbre==true)
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.Q))
+        {
+            animator.SetBool("RunLeft", false);
+            isJumpR = false;
+        }
+            
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && isOmbre==true)
         {
             transform.Translate(Vector2.up * speed * Time.deltaTime);
             animator.SetBool("RunRight", false);
+            animator.SetBool("RunLeft", false);
         }
+
         if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isOmbre==true)
         {
              transform.Translate(Vector2.down * speed * Time.deltaTime);
              animator.SetBool("RunRight", false);
         }
-        
-        /*if (IsGrounded == true &&  Input.GetKeyDown(KeyCode.Space) && isOmbre==false)
-        {
 
-            rigidbody2d.velocity = Vector2.up * jumpVelocity;
-            Debug.Log("Jump");
-            //animator.SetBool("IsGrounded", false);
-            IsGrounded = false;
-        }*/
         if(health<=0)
         {
             Destroy(gameObject);
@@ -168,34 +164,42 @@ public class PlayerMove : MonoBehaviour
             /*if (Input.GetKeyDown(KeyCode.X))
             {
                 isShadow = !isShadow;
-                ShadowMode();
             }*/
-           if (Input.GetKeyDown("x"))
-            {
-                Physics2D.IgnoreLayerCollision(8, 9, true);
-                Physics2D.IgnoreLayerCollision(8, 10, true);
-                animator.SetBool("Shadow", true);
-                rigidbody2d.gravityScale = 0;
-                isOmbre = true;
-                colliB.enabled = false;
-                colliBF.SetActive(false);
-                colliC.enabled = true;
-            }
 
-            if (Input.GetKeyDown("v"))
-            {
-                Physics2D.IgnoreLayerCollision(8, 9, false);
-                Physics2D.IgnoreLayerCollision(8, 10, false);
-                animator.SetBool("Shadow", false);
-                rigidbody2d.gravityScale = 1;
-                isOmbre = false;
-                colliB.enabled = true;
-                colliBF.SetActive(true);
-                colliC.enabled = false;
-            }
+            isShadowMode = true;
+
+            if (Input.GetKeyDown("x"))
+             {
+                 Physics2D.IgnoreLayerCollision(8, 9, true);
+                 Physics2D.IgnoreLayerCollision(8, 10, true);
+                 animator.SetBool("Shadow", true);
+                 rigidbody2d.gravityScale = 0;
+                 isOmbre = true;
+                 colliB.enabled = false;
+                 colliBF.SetActive(false);
+                 colliC.enabled = true;
+             }
+
+             if (Input.GetKeyUp("x"))
+             {
+                 Physics2D.IgnoreLayerCollision(8, 9, false);
+                 Physics2D.IgnoreLayerCollision(8, 10, false);
+                 animator.SetBool("Shadow", false);
+                 rigidbody2d.gravityScale = 1;
+                 isOmbre = false;
+                 colliB.enabled = true;
+                 colliBF.SetActive(true);
+                 colliC.enabled = false;
+             }
         }
         if (collision.gameObject.tag == "Wall2")
         {
+            /*if (Input.GetKeyDown(KeyCode.X))
+            {
+                isShadow = !isShadow;
+                ShadowMode();
+            }*/
+            isShadowMode = true;
             if (Input.GetKeyDown("x"))
             {
                 Physics2D.IgnoreLayerCollision(8, 9, true);
@@ -207,7 +211,7 @@ public class PlayerMove : MonoBehaviour
                 colliC.enabled = true;
             }
 
-            if (Input.GetKeyDown("v"))
+            if (Input.GetKeyUp("x"))
             {
                 Physics2D.IgnoreLayerCollision(8, 9, false);
                 Physics2D.IgnoreLayerCollision(8, 10, false);
@@ -237,6 +241,7 @@ public class PlayerMove : MonoBehaviour
                 isShadow = !isShadow;
             }*/
             isShadow = false;
+            isShadowMode = false;
         }
 
         if (collision.gameObject.tag == "Wall2")
@@ -249,6 +254,7 @@ public class PlayerMove : MonoBehaviour
             colliBF.SetActive(true);
             colliC.enabled = false;
             isShadow = false;
+            isShadowMode = false;
         }
     }
 

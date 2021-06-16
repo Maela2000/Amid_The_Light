@@ -15,6 +15,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject pauseTxt;
     public GameObject panelWin;
     public GameObject dashBar;
+    public GameObject shadow;
     public GameObject Commands;
     public bool isFinish=false;
 
@@ -68,6 +69,15 @@ public class GameplayManager : MonoBehaviour
         if (player.GetComponent<PlayerMove>().isDash == false)
         {
             dashBar.SetActive(false);
+        }
+
+        if (player.GetComponent<PlayerMove>().isShadowMode == true && isFinish == false)
+        {
+            shadow.SetActive(true);
+        }
+        if (player.GetComponent<PlayerMove>().isShadowMode == false)
+        {
+            shadow.SetActive(false);
         }
     }
     #endregion

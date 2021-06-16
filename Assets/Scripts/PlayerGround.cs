@@ -25,11 +25,13 @@ public class PlayerGround : MonoBehaviour
 
         if (IsGrounded == true && Input.GetKeyDown(KeyCode.Space) && player.GetComponent<PlayerMove>().isOmbre == false)
         {
-
             rigidbody2d.velocity = Vector2.up * jumpVelocity;
-            Debug.Log("Jump");
             //animator.SetBool("IsGrounded", false);
             IsGrounded = false;
+            if(player.GetComponent<PlayerMove>().isJumpR = true)
+            {
+
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D other)

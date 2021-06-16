@@ -65,9 +65,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AttackBall.cs" />
     <Compile Include="Assets\Scripts\BossLaser.cs" />
+    <Compile Include="Assets\Scripts\Cage.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
     <Compile Include="Assets\Scripts\EnnemyTest.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
+    <Compile Include="Assets\Scripts\Key.cs" />
     <Compile Include="Assets\Scripts\Levels.cs" />
     <Compile Include="Assets\Scripts\Levier.cs" />
     <Compile Include="Assets\Scripts\LightsClign.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Assets\Scripts\Platformers.cs" />
     <Compile Include="Assets\Scripts\PlayerGround.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\Scripts\SpawnLaser.cs" />
     <Compile Include="Assets\Scripts\Spawnball.cs" />
     <Compile Include="Assets\Scripts\Store.cs" />
     <Compile Include="Assets\Scripts\lampadaire.cs" />
