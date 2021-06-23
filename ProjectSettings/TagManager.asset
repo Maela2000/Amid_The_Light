@@ -13,6 +13,10 @@ TagManager:
   - platform
   - End
   - Wall2
+  - mark1
+  - mark2
+  - mark3
+  - mark4
   layers:
   - Default
   - TransparentFX
