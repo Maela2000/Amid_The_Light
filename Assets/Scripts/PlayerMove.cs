@@ -7,71 +7,100 @@ public class PlayerMove : MonoBehaviour
     public float speed;
     public float health;
     public Animator animator;
-    public float time;
-    public bool isDash;
+    //public float time;
+    //public bool isDash;
+    public AudioClip shadow;
+    public AudioClip stopshadow;
+    public AudioSource AudioRun;
+    public AudioSource audiosource;
+
     public Collider2D colliB;
     public GameObject colliBF;
     public Collider2D colliC;
-    public Collider2D colliCB;
 
 
     [SerializeField]
     private Rigidbody2D rigidbody2d;
-    [SerializeField]
-    private bool IsGrounded = false;
-    [SerializeField]
-    private float jumpVelocity;
-    private bool isShadow=false;
     public bool isOmbre= false;
     private Transform target;
     private bool isLeft;
     public bool isShadowMode = false;
-    public bool isJumpR;
+    public float isJumpR=0;
+    public float isJump= 0;
+    public float isJumpL;
+    public float run;
+    public float ts;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        //xPos = Input.GetAxis("Horizontal");
-        /*if (xPos != 0) //Rotate player sprite to the left
-        {
-            GetComponent<SpriteRenderer>().flipX = xPos < 0;
-        }*/
-
         if (Input.GetKey(KeyCode.B))
         {
             health = 0;
         }
 
+        #region movements
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector2.right * speed * Time.deltaTime);
-            animator.SetBool("RunRight", true);
-            isJumpR = true;
+            isJumpR = 1;
+            if(colliBF.GetComponent<PlayerGround>().IsGrounded==false)
+            {
+                animator.SetBool("RunRight", false);
+                isJump = 1;
+                run = 0;
+            }
+            if (colliBF.GetComponent<PlayerGround>().IsGrounded == true)
+            {
+                animator.SetBool("RunRight", true);
+                isJump = 2;
+                run = 1;
+            }
+        }
+
+        if(run==0)
+        {
+            AudioRun.Play();
         }
 
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
         {
             animator.SetBool("RunRight", false);
-            isJumpR = true;
+            isJumpR = 1;
+            run = 0;
         }
             
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
         {
             transform.Translate(Vector2.left * speed * Time.deltaTime);
-            animator.SetBool("RunLeft", true);
-            isJumpR = false;
+            isJumpR = -1;
+
+            if (colliBF.GetComponent<PlayerGround>().IsGrounded == false)
+            {
+                animator.SetBool("RunLeft", false);
+                isJump = -1;
+                run = 0;
+            }
+            if (colliBF.GetComponent<PlayerGround>().IsGrounded == true)
+            {
+                animator.SetBool("RunLeft", true);
+                isJump = 2;
+                run = 1;
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.Q))
         {
             animator.SetBool("RunLeft", false);
-            isJumpR = false;
+            isJumpR = -1;
+            run = 0;
+            isJumpL = 1;
         }
             
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && isOmbre==true)
@@ -86,11 +115,88 @@ public class PlayerMove : MonoBehaviour
              transform.Translate(Vector2.down * speed * Time.deltaTime);
              animator.SetBool("RunRight", false);
         }
+        #endregion
 
-        if(health<=0)
+        #region static left
+        if (isJumpL == 1 && isJump == 0 && isJumpR==-1 && run==0)
+        {
+            animator.SetBool("StaticLeft", true);
+        }
+
+        if (isJumpL == 1 && isJump == 0 && isJumpR == -1 && run == 0 && isOmbre==false)
+        {
+            animator.SetBool("StaticLeft", true);
+        }
+
+        if (isJump == 0 && isJumpR != -1)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+
+        if (isJump != 0 && isJumpR != -1)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+
+        if (isJump != 0 && isJumpR == -1)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+
+        if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre == false)
+        {
+            animator.SetBool("StaticLeft", false);
+            JumpLeft();
+        }
+
+        else if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre==true)
+        {
+            animator.SetBool("JumpL", false);
+            animator.SetBool("Shadow", true);
+        }
+
+        if (isJumpR == -1 && run==1)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+
+        if (isJumpR == -1 && run == 1 && isOmbre == true)
+        {
+            animator.SetBool("StaticLeft", false);
+            animator.SetBool("RunLeft", false);
+            animator.SetBool("Shadow", true);
+        }
+
+        if (isJumpR == -1 && run == 1 && isOmbre == false)
+        {
+            animator.SetBool("StaticLeft", false);
+            animator.SetBool("RunLeft", true);
+            animator.SetBool("Shadow", false);
+        }
+
+        if (isJumpR == -1 && run == 0 && isOmbre == false)
+        {
+            animator.SetBool("StaticLeft", true);
+            animator.SetBool("RunLeft", false);
+            animator.SetBool("Shadow", false);
+        }
+
+        if (isJumpR != -1 && run == 1)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+
+        if (isJumpR != -1 && run==0)
+        {
+            animator.SetBool("StaticLeft", false);
+        }
+        #endregion
+
+        if (health<=0)
         {
             Destroy(gameObject);
         }
+        #region dash com
         /*if(Input.GetKeyDown(KeyCode.Z))
         {
             GetComponent<SpriteRenderer>().sortingOrder = 10;
@@ -124,16 +230,28 @@ public class PlayerMove : MonoBehaviour
             time = 0;
             IsGrounded = true;
         }*/
-
-        FollowTarget();
+        #endregion
     }
-    private void FollowTarget()
+    #region jump
+    public void JumpRight()
     {
-        if (target != null)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);//The enemy follow the player
-        }
+        animator.SetBool("JumpR", true);
     }
+    public void StopJumpRight()
+    {
+        animator.SetBool("JumpR", false);
+    }
+
+    public void JumpLeft()
+    {
+        animator.SetBool("JumpL", true);
+    }
+    public void StopJumpLeft()
+    {
+        animator.SetBool("JumpL", false);
+    }
+    #endregion
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -145,82 +263,64 @@ public class PlayerMove : MonoBehaviour
         if (other.gameObject.tag == "End")
         {
             GameplayManager.Instance.isFinish = true;
-            isDash = false;
+            //isDash = false;
             GameplayManager.Instance.ShowWin();
         }
     }
-    /*private void OnCollisionExit2D(Collision2D other)
-    {
-        if ((other.gameObject.tag == "ground"))
-        {
-            IsGrounded = false;
-        }
-    }*/
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
-            //Shad();
-            /*if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKey("v"))
             {
-                isShadow = !isShadow;
-            }*/
+                 ShadowT();
+                if (ts == 0)
+                {
+                    audiosource.PlayOneShot(shadow);
+                    ts = 1;
+                }
+            }
 
-            isShadowMode = true;
-
-            if (Input.GetKeyDown("x"))
-             {
-                 Physics2D.IgnoreLayerCollision(8, 9, true);
-                 Physics2D.IgnoreLayerCollision(8, 10, true);
-                 animator.SetBool("Shadow", true);
-                 rigidbody2d.gravityScale = 0;
-                 isOmbre = true;
-                 colliB.enabled = false;
-                 colliBF.SetActive(false);
-                 colliC.enabled = true;
-             }
-
-             if (Input.GetKeyUp("x"))
-             {
-                 Physics2D.IgnoreLayerCollision(8, 9, false);
-                 Physics2D.IgnoreLayerCollision(8, 10, false);
-                 animator.SetBool("Shadow", false);
-                 rigidbody2d.gravityScale = 1;
-                 isOmbre = false;
-                 colliB.enabled = true;
-                 colliBF.SetActive(true);
-                 colliC.enabled = false;
-             }
+            else
+            {
+                ShadowF();
+            }
         }
+    
+
         if (collision.gameObject.tag == "Wall2")
         {
-            /*if (Input.GetKeyDown(KeyCode.X))
-            {
-                isShadow = !isShadow;
-                ShadowMode();
-            }*/
-            isShadowMode = true;
-            if (Input.GetKeyDown("x"))
+            if (Input.GetKey("v"))
             {
                 Physics2D.IgnoreLayerCollision(8, 9, true);
                 Physics2D.IgnoreLayerCollision(8, 10, true);
                 animator.SetBool("Shadow", true);
+                rigidbody2d.gravityScale = 1;
                 isOmbre = true;
                 colliB.enabled = false;
                 colliBF.SetActive(false);
                 colliC.enabled = true;
+                StopJumpLeft();
+                StopJumpRight();
+                isJump = 0;
+                isJumpR = 0;
+                if (ts == 0)
+                {
+                    audiosource.PlayOneShot(shadow);
+                    ts = 1;
+                }
             }
 
-            if (Input.GetKeyUp("x"))
+            else 
             {
-                Physics2D.IgnoreLayerCollision(8, 9, false);
-                Physics2D.IgnoreLayerCollision(8, 10, false);
-                animator.SetBool("Shadow", false);
-                isOmbre = false;
-                colliB.enabled = true;
-                colliBF.SetActive(true);
-                colliC.enabled = false;
+                ShadowF();
             }
+        }
+
+        if(collision.gameObject.tag == "Shadow")
+        {
+            isShadowMode = true;
         }
     }
 
@@ -236,11 +336,16 @@ public class PlayerMove : MonoBehaviour
             colliB.enabled = true;
             colliBF.SetActive(true);
             colliC.enabled = false;
-            /*if (isShadow == true)
+
+            if (ts == 1)
             {
-                isShadow = !isShadow;
-            }*/
-            isShadow = false;
+                audiosource.PlayOneShot(stopshadow);
+                ts = 0;
+            }
+        }
+
+        if (collision.gameObject.tag == "Shadow")
+        {
             isShadowMode = false;
         }
 
@@ -253,41 +358,45 @@ public class PlayerMove : MonoBehaviour
             colliB.enabled = true;
             colliBF.SetActive(true);
             colliC.enabled = false;
-            isShadow = false;
             isShadowMode = false;
+            if (ts == 1)
+            {
+                audiosource.PlayOneShot(stopshadow);
+                ts = 0;
+            }
         }
     }
 
-    void Shad()
+    void ShadowT()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            isShadow = !isShadow;
-            ShadowMode();
-        }
+        Physics2D.IgnoreLayerCollision(8, 9, true);
+        Physics2D.IgnoreLayerCollision(8, 10, true);
+        animator.SetBool("Shadow", true);
+        rigidbody2d.gravityScale = 0;
+        isOmbre = true;
+        colliB.enabled = false;
+        colliBF.SetActive(false);
+        colliC.enabled = true;
+        StopJumpLeft();
+        StopJumpRight();
+        isJump = 0;
+        isJumpR = 0;
     }
-    void ShadowMode()
-    {
-        if (isShadow==true)
-        {
-            Physics2D.IgnoreLayerCollision(8, 9, true);
-            Physics2D.IgnoreLayerCollision(8, 10, true);
-            animator.SetBool("Shadow", true);
-            rigidbody2d.gravityScale = 0;
-            isOmbre = true;
-            colliB.enabled = false;
-            colliC.enabled = true;
-        }
 
-        else
+    void ShadowF()
+    {
+        Physics2D.IgnoreLayerCollision(8, 9, false);
+        Physics2D.IgnoreLayerCollision(8, 10, false);
+        animator.SetBool("Shadow", false);
+        rigidbody2d.gravityScale = 1;
+        isOmbre = false;
+        colliB.enabled = true;
+        colliBF.SetActive(true);
+        colliC.enabled = false;
+        if (ts == 1)
         {
-            Physics2D.IgnoreLayerCollision(8, 9, false);
-            Physics2D.IgnoreLayerCollision(8, 10, false);
-            animator.SetBool("Shadow", false);
-            rigidbody2d.gravityScale = 1;
-            isOmbre = false;
-            colliB.enabled = true;
-            colliC.enabled = false;
+            audiosource.PlayOneShot(stopshadow);
+            ts = 0;
         }
     }
 }

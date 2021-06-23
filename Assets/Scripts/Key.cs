@@ -5,6 +5,8 @@ using UnityEngine;
 public class Key : MonoBehaviour
 {
     public bool active;
+    public AudioClip take;
+    public AudioSource audiosource;
 
     private SpriteRenderer sprite;
     // Start is called before the first frame update
@@ -22,9 +24,15 @@ public class Key : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && active == true)
         {
-            Debug.Log("active");
+            audiosource.PlayOneShot(take);
+            StartCoroutine(Kept());
             active = false;
-            sprite.color = new Color(0.25f, 0.25f, 0.25f, 0);
         }
+    }
+
+    IEnumerator Kept()
+    {
+        yield return new WaitForSeconds(0.2f);
+        sprite.color = new Color(0.25f, 0.25f, 0.25f, 0);
     }
 }

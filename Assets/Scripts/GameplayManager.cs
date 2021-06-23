@@ -19,7 +19,7 @@ public class GameplayManager : MonoBehaviour
     public GameObject Commands;
     public bool isFinish=false;
 
-    //public float levier;
+    public float levier;
     //public float max;
 
     #endregion
@@ -62,14 +62,14 @@ public class GameplayManager : MonoBehaviour
             ShowGameOver();
         }
 
-        if(player.GetComponent<PlayerMove>().isDash==true && isFinish == false)
+        /*if(player.GetComponent<PlayerMove>().isDash==true && isFinish == false)
         {
             dashBar.SetActive(true);
         }
         if (player.GetComponent<PlayerMove>().isDash == false)
         {
             dashBar.SetActive(false);
-        }
+        }*/
 
         if (player.GetComponent<PlayerMove>().isShadowMode == true && isFinish == false)
         {
@@ -87,13 +87,12 @@ public class GameplayManager : MonoBehaviour
         {
             Time.timeScale = 0f;
             pauseTxt.SetActive(true);
-            AudioListener.pause = true;
+            shadow.SetActive(false);
         }
         else
         {
             Time.timeScale = 1;
             pauseTxt.SetActive(false);
-            AudioListener.pause = false;
         }
     }
     #region function
@@ -103,11 +102,13 @@ public class GameplayManager : MonoBehaviour
         panelGameOver.SetActive(true);
         Time.timeScale = 0f;
         dashBar.SetActive(false);
+        shadow.SetActive(false);
     }
 
     public void ShowWin()
     {
         dashBar.SetActive(false);
+        shadow.SetActive(false);
         panelWin.SetActive(true);
         Time.timeScale = 0f;
     }

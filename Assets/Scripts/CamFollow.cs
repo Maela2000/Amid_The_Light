@@ -20,10 +20,43 @@ public class CamFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        if (player.position.x <= posXMax && player.position.x >= posXMin && player.position.y <= posYMax && player.position.y >= posYMin)
+    {   
+        if (GameplayManager.Instance.levier == 0)
         {
-            transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, offset.z);
+            if (player.position.x <= posXMax && player.position.x >= posXMin && player.position.y <= posYMax && player.position.y >= posYMin)
+            {
+                transform.position = new Vector3(player.position.x + offset.x, player.position.y + offset.y, offset.z);
+            }
         }
-    }        
+
+        if(GameplayManager.Instance.levier == 1)
+        {
+            transform.position = new Vector3(28.57f, 3.02f, -10);
+            StartCoroutine(Move());
+        }
+
+        if (GameplayManager.Instance.levier == 2)
+        {
+            transform.position = new Vector3(109.92f, 5.45f, -10);
+            StartCoroutine(Move());
+        }
+
+        if (GameplayManager.Instance.levier == 3)
+        {
+            transform.position = new Vector3(36.01f, 0.76f, -10);
+            StartCoroutine(Move());
+        }
+
+        if (GameplayManager.Instance.levier == 4)
+        {
+            transform.position = new Vector3(160.4f, 5f, -10);
+            StartCoroutine(Move());
+        }
+    }
+
+    IEnumerator Move()
+    {
+        yield return new WaitForSeconds(1.5f);
+        GameplayManager.Instance.levier = 0;
+    }
 }

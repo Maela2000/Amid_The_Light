@@ -5,6 +5,8 @@ using UnityEngine;
 public class Cage : MonoBehaviour
 {
     public GameObject key;
+    public AudioClip op;
+    public AudioSource audiosource;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,14 @@ public class Cage : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && key.GetComponent<Key>().active == false)
         {
-            Destroy(gameObject);
+            audiosource.PlayOneShot(op);
+            StartCoroutine(Open());
         }
+    }
+
+    IEnumerator Open()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }
