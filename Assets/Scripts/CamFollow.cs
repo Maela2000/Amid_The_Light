@@ -31,24 +31,28 @@ public class CamFollow : MonoBehaviour
 
         if(GameplayManager.Instance.levier == 1)
         {
+            player.GetComponent<PlayerMove>().speed = 0;
             transform.position = new Vector3(28.57f, 3.02f, -10);
             StartCoroutine(Move());
         }
 
         if (GameplayManager.Instance.levier == 2)
         {
+            player.GetComponent<PlayerMove>().speed = 0;
             transform.position = new Vector3(109.92f, 5.45f, -10);
             StartCoroutine(Move());
         }
 
         if (GameplayManager.Instance.levier == 3)
         {
+            player.GetComponent<PlayerMove>().speed = 0;
             transform.position = new Vector3(36.01f, 0.76f, -10);
             StartCoroutine(Move());
         }
 
         if (GameplayManager.Instance.levier == 4)
         {
+            player.GetComponent<PlayerMove>().speed = 0;
             transform.position = new Vector3(160.4f, 5f, -10);
             StartCoroutine(Move());
         }
@@ -58,5 +62,6 @@ public class CamFollow : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         GameplayManager.Instance.levier = 0;
+        player.GetComponent<PlayerMove>().speed = 5;
     }
 }

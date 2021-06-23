@@ -143,7 +143,7 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("StaticLeft", false);
         }
 
-        if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre == false)
+        if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1)
         {
             animator.SetBool("StaticLeft", false);
             JumpLeft();
@@ -151,7 +151,7 @@ public class PlayerMove : MonoBehaviour
 
         else if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre==true)
         {
-            animator.SetBool("JumpL", false);
+            StopJumpLeft();
             animator.SetBool("Shadow", true);
         }
 
@@ -160,21 +160,22 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("StaticLeft", false);
         }
 
-        if (isJumpR == -1 && run == 1 && isOmbre == true)
+        if (isJumpL == 1 && isJumpR == -1 && run == 1 && isOmbre == true && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", false);
             animator.SetBool("RunLeft", false);
             animator.SetBool("Shadow", true);
+            animator.SetBool("JumpL", false);
         }
 
-        if (isJumpR == -1 && run == 1 && isOmbre == false)
+        if (isJumpL == 1 && isJumpR == -1 && run == 1 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", false);
             animator.SetBool("RunLeft", true);
             animator.SetBool("Shadow", false);
         }
 
-        if (isJumpR == -1 && run == 0 && isOmbre == false)
+        if (isJumpL == 1 && isJumpR == -1 && run == 0 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", true);
             animator.SetBool("RunLeft", false);
