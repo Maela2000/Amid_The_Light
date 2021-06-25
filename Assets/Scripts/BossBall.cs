@@ -27,4 +27,18 @@ public class BossBall : MonoBehaviour
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "mark1")
+        {
+            right = true;
+            left = false;
+        }
+        if (other.tag == "mark2")
+        {
+
+            left = true;
+            right = false;
+        }
+    }
 }

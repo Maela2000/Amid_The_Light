@@ -16,6 +16,8 @@ public class laserAttak : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Physics2D.IgnoreLayerCollision(10, 11, true);
+
         if (y <= c - 1 && y >= v)
         {
             transform.Rotate(0, 0, 1f);

@@ -28,6 +28,8 @@ public class AttackBall : MonoBehaviour
     void Update()
     {
         //transform.Translate(Vector3.left * speed * Time.deltaTime);
+        Physics2D.IgnoreLayerCollision(11, 10, true);
+        Physics2D.IgnoreLayerCollision(10, 10, true);
     }
 
      IEnumerator Homing()
