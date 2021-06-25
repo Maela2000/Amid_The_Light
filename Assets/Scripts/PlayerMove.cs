@@ -11,7 +11,9 @@ public class PlayerMove : MonoBehaviour
     //public bool isDash;
     public AudioClip shadow;
     public AudioClip stopshadow;
+    public AudioClip death;
     public AudioSource AudioRun;
+    public AudioSource audioShadow;
     public AudioSource audiosource;
 
     public Collider2D colliB;
@@ -21,15 +23,19 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField]
     private Rigidbody2D rigidbody2d;
+    [SerializeField]
+    private SpriteRenderer sprite;
     public bool isOmbre= false;
     private Transform target;
     private bool isLeft;
     public bool isShadowMode = false;
+    public bool isDeath=false;
     public float isJumpR=0;
     public float isJump= 0;
     public float isJumpL;
     public float run;
     public float ts;
+    public float isStatic;
 
     
     void Start()
@@ -40,10 +46,10 @@ public class PlayerMove : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKey(KeyCode.B))
+        /*if (Input.GetKey(KeyCode.B))
         {
             health = 0;
-        }
+        }*/
 
         #region movements
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -74,6 +80,7 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("RunRight", false);
             isJumpR = 1;
             run = 0;
+            isJumpL = 0;
         }
             
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Q))
@@ -101,6 +108,10 @@ public class PlayerMove : MonoBehaviour
             isJumpR = -1;
             run = 0;
             isJumpL = 1;
+            if(isOmbre==false)
+            {
+                isStatic = -1;
+            }
         }
             
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Z)) && isOmbre==true)
@@ -119,11 +130,6 @@ public class PlayerMove : MonoBehaviour
 
         #region static left
         if (isJumpL == 1 && isJump == 0 && isJumpR==-1 && run==0)
-        {
-            animator.SetBool("StaticLeft", true);
-        }
-
-        if (isJumpL == 1 && isJump == 0 && isJumpR == -1 && run == 0 && isOmbre==false)
         {
             animator.SetBool("StaticLeft", true);
         }
@@ -149,7 +155,7 @@ public class PlayerMove : MonoBehaviour
             JumpLeft();
         }
 
-        else if (isJumpL == 1 && colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre==true)
+        else if (colliBF.GetComponent<PlayerGround>().jumping == 1 && isOmbre==true)
         {
             StopJumpLeft();
             animator.SetBool("Shadow", true);
@@ -160,22 +166,21 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("StaticLeft", false);
         }
 
-        if (isJumpL == 1 && isJumpR == -1 && run == 1 && isOmbre == true && colliBF.GetComponent<PlayerGround>().jumping == 0)
+        if (isJumpR == -1 && run == 1 && isOmbre == true && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", false);
             animator.SetBool("RunLeft", false);
             animator.SetBool("Shadow", true);
-            animator.SetBool("JumpL", false);
         }
 
-        if (isJumpL == 1 && isJumpR == -1 && run == 1 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
+        if (/*isJumpL == 1 &&*/ isJumpR == -1 && run == 1 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", false);
             animator.SetBool("RunLeft", true);
             animator.SetBool("Shadow", false);
         }
 
-        if (isJumpL == 1 && isJumpR == -1 && run == 0 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
+        if (/*isJumpL == 1 &&*/ isJumpR == -1 && run == 0 && isOmbre == false && colliBF.GetComponent<PlayerGround>().jumping == 0)
         {
             animator.SetBool("StaticLeft", true);
             animator.SetBool("RunLeft", false);
@@ -195,7 +200,7 @@ public class PlayerMove : MonoBehaviour
 
         if (health<=0)
         {
-            Destroy(gameObject);
+            StartCoroutine(Death(3));
         }
         #region dash com
         /*if(Input.GetKeyDown(KeyCode.Z))
@@ -253,12 +258,31 @@ public class PlayerMove : MonoBehaviour
     }
     #endregion
 
+    IEnumerator Death(float nbSeconds)
+    {
+        sprite.color = new Color(1, 1, 1, 1);
+        float seconds = 0;
+        while (sprite.color.a > 0)
+        {
+            seconds += Time.deltaTime;
+            float a = Mathf.Lerp(0.2f, 0, seconds / nbSeconds);
+            sprite.color = new Color(1, 1, 1, a);
+            yield return null;
+        }
+        Destroy(gameObject);
+    }
+
+    #region collision
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "light")
         {
-            Destroy(gameObject);
+            StartCoroutine(Death(1));
+            speed = 0;
+            rigidbody2d.gravityScale = 0;
+            isDeath = true;
+            audiosource.PlayOneShot(death);
         }
 
         if (other.gameObject.tag == "End")
@@ -271,6 +295,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+
         if (collision.gameObject.tag == "Wall")
         {
             if (Input.GetKey("v"))
@@ -278,7 +303,7 @@ public class PlayerMove : MonoBehaviour
                  ShadowT();
                 if (ts == 0)
                 {
-                    audiosource.PlayOneShot(shadow);
+                    audioShadow.PlayOneShot(shadow);
                     ts = 1;
                 }
             }
@@ -308,7 +333,7 @@ public class PlayerMove : MonoBehaviour
                 isJumpR = 0;
                 if (ts == 0)
                 {
-                    audiosource.PlayOneShot(shadow);
+                    audioShadow.PlayOneShot(shadow);
                     ts = 1;
                 }
             }
@@ -340,8 +365,13 @@ public class PlayerMove : MonoBehaviour
 
             if (ts == 1)
             {
-                audiosource.PlayOneShot(stopshadow);
+                audioShadow.PlayOneShot(stopshadow);
                 ts = 0;
+            }
+
+            if(isJumpR== -1 && run == 0)
+            {
+                animator.SetBool("StaticLeft", true);
             }
         }
 
@@ -362,7 +392,7 @@ public class PlayerMove : MonoBehaviour
             isShadowMode = false;
             if (ts == 1)
             {
-                audiosource.PlayOneShot(stopshadow);
+                audioShadow.PlayOneShot(stopshadow);
                 ts = 0;
             }
         }
@@ -396,8 +426,9 @@ public class PlayerMove : MonoBehaviour
         colliC.enabled = false;
         if (ts == 1)
         {
-            audiosource.PlayOneShot(stopshadow);
+            audioShadow.PlayOneShot(stopshadow);
             ts = 0;
         }
     }
+    #endregion
 }

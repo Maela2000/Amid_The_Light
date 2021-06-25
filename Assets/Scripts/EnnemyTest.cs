@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnnemyTest : MonoBehaviour
 {
+    public GameObject player;
+
     public float Enemyspeed;
     private int randomSpot;
     private float waitTime;
@@ -56,6 +58,11 @@ public class EnnemyTest : MonoBehaviour
             {
                 waitTime -= Time.deltaTime;
             }
+        }
+
+        if (player.GetComponent<PlayerMove>().isDeath==true)
+        {
+            Enemyspeed = 0;
         }
     }
 

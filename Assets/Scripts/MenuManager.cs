@@ -11,7 +11,6 @@ public class MenuManager : MonoBehaviour
     public GameObject Commands;
     public GameObject levels;
     public GameObject unlockL2;
-    public GameObject unlockL3;
     public Transform level;
 
     private void Start()
@@ -35,17 +34,9 @@ public class MenuManager : MonoBehaviour
         {
             unlockL2.SetActive(false);
         }
-        if (level.GetComponent<Levels>().isFinishL >= 2)
-        {
-            unlockL3.SetActive(false);
-        }
         if (level.GetComponent<Levels>().isFinishL == 0)
         {
             unlockL2.SetActive(true);
-        }
-        if (level.GetComponent<Levels>().isFinishL <= 1)
-        {
-            unlockL3.SetActive(true);
         }
     }
 
@@ -72,9 +63,10 @@ public class MenuManager : MonoBehaviour
     }
     public void OnClick_Level1()
     {
-        SceneManager.LoadScene(1);
+        Commands.SetActive(true);
+        StartCoroutine(Play());
     }
-
+    
     IEnumerator Play()
     {
         yield return new WaitForSeconds(7.5f);

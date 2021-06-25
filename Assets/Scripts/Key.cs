@@ -7,6 +7,7 @@ public class Key : MonoBehaviour
     public bool active;
     public AudioClip take;
     public AudioSource audiosource;
+    public float number;
 
     private SpriteRenderer sprite;
     // Start is called before the first frame update
@@ -25,14 +26,21 @@ public class Key : MonoBehaviour
         if (collision.gameObject.tag == "Player" && active == true)
         {
             audiosource.PlayOneShot(take);
-            StartCoroutine(Kept());
+            StartCoroutine(Cam());
             active = false;
         }
     }
 
+    IEnumerator Cam()
+    {
+        yield return new WaitForSeconds(0.3f);
+        GameplayManager.Instance.levier = number;
+        StartCoroutine(Kept());
+    }
+
     IEnumerator Kept()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         sprite.color = new Color(0.25f, 0.25f, 0.25f, 0);
     }
 }

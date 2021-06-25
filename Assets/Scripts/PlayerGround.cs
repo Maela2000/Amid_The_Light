@@ -28,7 +28,19 @@ public class PlayerGround : MonoBehaviour
         if (IsGrounded == true && Input.GetKeyDown(KeyCode.Space) && player.GetComponent<PlayerMove>().isOmbre == false)
         {
             audiosource.PlayOneShot(jumpD);
-            StartCoroutine(Jump());
+            rigidbody2d.velocity = Vector2.up * jumpVelocity;
+            IsGrounded = false;
+            jumping = 1;
+
+            if (player.GetComponent<PlayerMove>().isJumpR == 1)
+            {
+                player.GetComponent<PlayerMove>().JumpRight();
+            }
+
+            if (player.GetComponent<PlayerMove>().isJumpR == -1)
+            {
+                player.GetComponent<PlayerMove>().JumpLeft();
+            }
         }
 
         if (player.GetComponent<PlayerMove>().isJumpR == 0)
@@ -57,23 +69,6 @@ public class PlayerGround : MonoBehaviour
         }
     }
 
-    IEnumerator Jump()
-    {
-        yield return new WaitForSeconds(0.1f);
-        rigidbody2d.velocity = Vector2.up * jumpVelocity;
-        IsGrounded = false;
-        jumping = 1;
-
-        if (player.GetComponent<PlayerMove>().isJumpR == 1)
-        {
-            player.GetComponent<PlayerMove>().JumpRight();
-        }
-
-        if (player.GetComponent<PlayerMove>().isJumpR == -1)
-        {
-            player.GetComponent<PlayerMove>().JumpLeft();
-        }
-    }
     private void OnCollisionEnter2D(Collision2D other)
     {
         if ((other.gameObject.tag == "ground"))

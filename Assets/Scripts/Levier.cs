@@ -32,7 +32,7 @@ public class Levier : MonoBehaviour
         {
             indic.SetActive(true);
 
-            if ((Input.GetKeyDown("c")))
+            if ((Input.GetKey("c")))
             {
                 audiosource.PlayOneShot(act);
                 active = false;
@@ -50,7 +50,7 @@ public class Levier : MonoBehaviour
     }
     IEnumerator Action()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         actionne.SetActive(false);
         actionner.SetActive(true);
         indic.SetActive(false);

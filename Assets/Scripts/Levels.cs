@@ -33,7 +33,7 @@ public class Levels : MonoBehaviour
     {
         if (isFinishL >= 1)
         {
-            //SceneManager.LoadScene(2);
+            SceneManager.LoadScene(2);
         }
     }
     public void OnClick_Level3()

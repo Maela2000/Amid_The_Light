@@ -6,6 +6,7 @@ public class CamFollow : MonoBehaviour
 {
     public Transform player;
     public Vector3 offset;
+    public float speedPlayer;
 
     public float posXMax;
     public float posXMin;
@@ -56,12 +57,19 @@ public class CamFollow : MonoBehaviour
             transform.position = new Vector3(160.4f, 5f, -10);
             StartCoroutine(Move());
         }
+
+        if (GameplayManager.Instance.levier == 5)
+        {
+            player.GetComponent<PlayerMove>().speed = 0;
+            transform.position = new Vector3(108.6f, -0.68f, -10);
+            StartCoroutine(Move());
+        }
     }
 
     IEnumerator Move()
     {
         yield return new WaitForSeconds(1.5f);
         GameplayManager.Instance.levier = 0;
-        player.GetComponent<PlayerMove>().speed = 5;
+        player.GetComponent<PlayerMove>().speed = speedPlayer;
     }
 }
