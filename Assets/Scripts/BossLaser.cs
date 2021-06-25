@@ -11,11 +11,12 @@ public class BossLaser : MonoBehaviour
     private bool right = true;
     [SerializeField]
     private bool left = false;
+    public Vector3 offset ;
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnLaser", 10f, 8f);
-       
+       offset  = new Vector3(-2.55f, -2.05f, 0);
     }
 
     void SpawnLaser()
@@ -27,7 +28,7 @@ public class BossLaser : MonoBehaviour
     IEnumerator Laser()
     {
         yield return new WaitForSeconds(0.5f);
-        Instantiate(laser, transform.position, transform.rotation);
+        Instantiate(laser, transform.position + offset, transform.rotation);
     }
 
     IEnumerator Stop()
