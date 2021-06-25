@@ -68,8 +68,9 @@
     <Compile Include="Assets\Scripts\BossBall.cs" />
     <Compile Include="Assets\Scripts\BossLaser.cs" />
     <Compile Include="Assets\Scripts\Cage.cs" />
-    <Compile Include="Assets\Scripts\Cam boss.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
+    <Compile Include="Assets\Scripts\Camboss.cs" />
+    <Compile Include="Assets\Scripts\Core.cs" />
     <Compile Include="Assets\Scripts\EnnemyTest.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
     <Compile Include="Assets\Scripts\Key.cs" />
