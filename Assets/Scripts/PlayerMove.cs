@@ -276,7 +276,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "light")
+        if (other.gameObject.tag == "light")
         {
             StartCoroutine(Death(1));
             speed = 0;
