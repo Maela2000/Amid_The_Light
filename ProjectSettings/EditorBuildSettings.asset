@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BastienScene.unity
     guid: 7cd1af4fa820d95449af2a38feffad13
+  - enabled: 1
+    path: Assets/Scenes/bosslvl.unity
+    guid: beb5cc76a34b19d49b974e1ec3ed1685
   m_configObjects: {}

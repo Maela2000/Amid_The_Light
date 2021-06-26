@@ -331,6 +331,7 @@ public class PlayerMove : MonoBehaviour
                 StopJumpRight();
                 isJump = 0;
                 isJumpR = 0;
+                run = 0;
                 if (ts == 0)
                 {
                     audioShadow.PlayOneShot(shadow);
@@ -412,6 +413,7 @@ public class PlayerMove : MonoBehaviour
         StopJumpRight();
         isJump = 0;
         isJumpR = 0;
+        run = 0;
     }
 
     void ShadowF()
