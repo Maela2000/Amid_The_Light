@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossBall : MonoBehaviour
 {
-    public float speed = 1;
+    public float speed;
     [SerializeField]
     private bool right = true;
     [SerializeField]
