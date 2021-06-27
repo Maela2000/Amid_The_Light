@@ -11,12 +11,15 @@ public class BossLaser : MonoBehaviour
     private bool right = true;
     [SerializeField]
     private bool left = false;
-    public Vector3 offset ;
+    public Vector3 offset;
+
+    public Vector3 offsetBis;
+    public GameObject alerte;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnLaser", 10f, 8f);
-       offset  = new Vector3(-2.55f, -2.05f, 0);
+        InvokeRepeating("SpawnLaser", 10f, 10f);
+        
     }
 
     void SpawnLaser()
@@ -24,11 +27,20 @@ public class BossLaser : MonoBehaviour
         instaLaser = true;
         StartCoroutine("Stop");
         StartCoroutine("Laser");
+        alerte.SetActive(true);
     }
     IEnumerator Laser()
     {
-        yield return new WaitForSeconds(0.5f);
-        Instantiate(laser, transform.position + offset, transform.rotation);
+        yield return new WaitForSeconds(1f);
+        if (GameplayManager.Instance.switchBoss == false)
+        {
+            Instantiate(laser, transform.position + offsetBis, transform.rotation);
+        }
+        else
+        {
+            Instantiate(laser, transform.position + offset, transform.rotation);
+        }
+        
     }
 
     IEnumerator Stop()
@@ -36,6 +48,7 @@ public class BossLaser : MonoBehaviour
         speed = 0;
         yield return new WaitForSeconds(4f);
         speed = 1;
+        alerte.SetActive(false);
         instaLaser = false;
     }
 

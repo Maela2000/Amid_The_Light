@@ -20,6 +20,10 @@ public class GameplayManager : MonoBehaviour
     public bool isFinish=false;
 
     public float levier;
+    public bool coreDestroy;
+    public bool bossAtt;
+    public bool switchBoss = false;
+    public float coreDie;
     //public float max;
 
     #endregion
@@ -44,13 +48,18 @@ public class GameplayManager : MonoBehaviour
     #region Update
     public void Update()
     {
+        if (coreDie >= 3)
+        {
+            StartCoroutine("stopAtt");
+            ShowWin();
+        }
         if (Input.GetKey("escape"))
         {
             Time.timeScale = 1;
             pauseTxt.SetActive(false);
             AudioListener.pause = false;
         }
-
+        
         if (Input.GetKeyDown(KeyCode.G))
         {
             gameIsPaused = !gameIsPaused;
@@ -95,6 +104,7 @@ public class GameplayManager : MonoBehaviour
             pauseTxt.SetActive(false);
         }
     }
+   
     #region function
 
     public void ShowGameOver()
