@@ -11,13 +11,13 @@ public class Levels : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isFinishL = PlayerPrefs.GetInt("level1", isFinishL);
+        isFinishL = PlayerPrefs.GetInt("niveau", isFinishL);
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerPrefs.SetInt("level1", isFinishL);
+        PlayerPrefs.SetInt("niveau", isFinishL);
 
         if (level == 1 && GameplayManager.Instance.isFinish == true)
         {

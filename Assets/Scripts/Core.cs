@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Core : MonoBehaviour
-{ bool death = false; 
+{ 
+    bool death = false; 
     public GameObject coreBroken;
+    public GameObject indic;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +20,26 @@ public class Core : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && Input.GetKeyDown("c") && death == false) 
+        if (collision.gameObject.tag == "Player" && death == false) 
         {
-            death = true;
-            GameplayManager.Instance.coreDie = GameplayManager.Instance.coreDie + 1;
-            Debug.Log("c");
-            Instantiate(coreBroken, transform.position, transform.rotation);
-            Destroy(gameObject);
+            indic.SetActive(true);
+
+            if (Input.GetKeyDown("c"))
+            {
+                death = true;
+                GameplayManager.Instance.coreDie = GameplayManager.Instance.coreDie + 1;
+                Debug.Log("c");
+                Instantiate(coreBroken, transform.position, transform.rotation);
+                Destroy(gameObject);
+                indic.SetActive(false);
+            }
         }  
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" && death == false)
+        {
+            indic.SetActive(false);
+        }
     }
 }

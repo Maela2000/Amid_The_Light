@@ -25,11 +25,6 @@ public class MenuManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKey(KeyCode.Q))
-        {
-            SceneManager.LoadScene(0);
-        }
-
         if (level.GetComponent<Levels>().isFinishL >= 1)
         {
             unlockL2.SetActive(false);

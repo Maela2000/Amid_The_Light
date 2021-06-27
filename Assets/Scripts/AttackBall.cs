@@ -43,7 +43,7 @@ public class AttackBall : MonoBehaviour
          transform.rotation = Quaternion.Slerp(transform.rotation, rotateToTarget, Time.deltaTime * rotationSpeed);
 
          rb.velocity = new Vector2(dir.x * 2, dir.y * 2);
-         yield return new WaitForSeconds(2f);
+         yield return new WaitForSeconds(4f);
          StartCoroutine("droit");
          //yield return null;
      }

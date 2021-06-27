@@ -31,7 +31,7 @@ public class BossLaser : MonoBehaviour
     }
     IEnumerator Laser()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         if (GameplayManager.Instance.switchBoss == false)
         {
             Instantiate(laser, transform.position + offsetBis, transform.rotation);
